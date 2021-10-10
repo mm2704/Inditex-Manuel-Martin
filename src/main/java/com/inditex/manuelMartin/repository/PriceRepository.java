@@ -9,5 +9,9 @@ import java.time.LocalDateTime;
 @Repository
 public interface PriceRepository extends JpaRepository<Price, Long> {
 
+    Price findFirstByStartDateBeforeAndEndDateAfterAndBrandIdAndProductIdOrderByPriorityDesc(LocalDateTime startDate, LocalDateTime endDate, Integer brandId, Integer productId);
 
+    default Price findByStartDateBeforeAndEndDateAfter(LocalDateTime givenDate, Integer brandId, Integer productId) {
+        return findFirstByStartDateBeforeAndEndDateAfterAndBrandIdAndProductIdOrderByPriorityDesc(givenDate, givenDate, brandId, productId);
+    }
 }
